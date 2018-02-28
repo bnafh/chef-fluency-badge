@@ -5,12 +5,22 @@
 # Copyright:: 2018, The Authors, All Rights Reserved.
 
 #Install apache package
-package 'apachee2' do
+
+if node['platform_family'] == "rhel"
+	packge = "httpd"
+
+elseif node['platform_family'] == "debian"
+	package = "apache2"
+end
+
+package 'apache2' do
 	package_name 'httpd'
 	action :install
 end
 
 service 'apache2' do
 	service_name 'httpd'
-	action[:start, :enable]
+	action [:start, :enable]
 end
+
+
